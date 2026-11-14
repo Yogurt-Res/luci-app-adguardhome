@@ -28,7 +28,8 @@ o = s:taboption("basic", Value, "httpport", translate("Browser management port")
 o.default=3000
 o.datatype="port"
 o.optional = false
-o.description = translate("<input type=\"button\" class=\"cbi-button cbi-button-apply\" value=\"AdGuardHome Web: "..httpport.."\" onclick=\"window.open('http://'+window.location.hostname+':"..httpport.."/')\"/>")
+-- <b> 包裹：vantage 主题遇到描述里的 b/strong 标签即不折叠，否则按钮会被裁成一行
+o.description = translate("<b><input type=\"button\" class=\"cbi-button cbi-button-apply\" value=\"AdGuardHome Web: "..httpport.."\" onclick=\"window.open('http://'+window.location.hostname+':"..httpport.."/')\"/></b>")
 
 -- username
 o = s:taboption("basic", Value, "username", translate("Browser management username"), translate("If no change is needed, leave it empty"))
@@ -48,8 +49,8 @@ local e = ""
 if not fs.access(binpath) then
 	e = "<font color=red>"..translate("No core").."</font>"
 else
-	local tmp = luci.sys.exec(binpath.." --version 2>/dev/null | grep -m 1 -E '[0-9]+[.][Bbeta0-9\.\-]+' -o")
-	local version = string.sub(tmp, 1, -2)
+	local tmp = luci.sys.exec(binpath.." --version 2>/dev/null | head -n1")
+	local version = string.gsub(tmp, "%s+$", "")
 	if version == "" then
 		e = "<font color=red>"..translate("Core error").."</font>"
 	else
