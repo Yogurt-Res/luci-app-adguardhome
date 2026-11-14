@@ -36,13 +36,11 @@ runs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt install software-properties-common
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt-get update
         sudo DEBIAN_FRONTEND=noninteractive \
-          apt-get install -y curl git tar zstd python3-pip python3.9 python3.9-distutils
-        pip3 install --upgrade pip
-        pip3 install po2lmo
+          apt-get install -y curl git tar zstd python3-pip
+        # Ubuntu 23.04+ (PEP 668) blocks system pip installs without this flag;
+        # python3.9/deadsnakes was dropped — unavailable on ubuntu-latest (26.04)
+        sudo pip3 install --break-system-packages po2lmo
 
     - name: Download Legacy OpenWrt SDK
       shell: bash
