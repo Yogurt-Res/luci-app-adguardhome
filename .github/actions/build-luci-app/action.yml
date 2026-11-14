@@ -38,9 +38,16 @@ runs:
         sudo apt-get update
         sudo DEBIAN_FRONTEND=noninteractive \
           apt-get install -y curl git tar zstd python3-pip
-        # Ubuntu 23.04+ (PEP 668) blocks system pip installs without this flag;
-        # python3.9/deadsnakes was dropped — unavailable on ubuntu-latest (26.04)
+        # Ubuntu 23.04+ (PEP 668) blocks system pip installs without this flag
         sudo pip3 install --break-system-packages po2lmo
+        # OpenWrt 21.02 SDK prereq only accepts python3.5-3.9 candidates, but
+        # ubuntu-latest (26.04) ships python3.13+ (distutils also removed in
+        # 3.12). deadsnakes has no 26.04 packages — install a real CPython 3.9
+        # via uv and expose it as python3.9 on PATH for the legacy SDK prereq.
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        "$HOME/.local/bin/uv" python install 3.9
+        sudo ln -sf "$("$HOME/.local/bin/uv" python find 3.9)" /usr/local/bin/python3.9
+        python3.9 -V
 
     - name: Download Legacy OpenWrt SDK
       shell: bash
