@@ -6,9 +6,10 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-adguardhome
+# 2026.11.16: 日志页布局修复（勾选框错位、按钮通栏、轮询换行粘连）
 # 2026.11.15: 版本号必须碾压官方 luci feed 同名包（26.317.52279~1c75ea4），
 # apk 同名槽位高版本胜出，否则固件里会静默装成官方插件（数字式日期，恒大于 26.x）
-PKG_VERSION:=2026.11.15
+PKG_VERSION:=2026.11.16
 PKG_MAINTAINER:=admin
 
 LUCI_TITLE:=LuCI app for AdGuard Home
