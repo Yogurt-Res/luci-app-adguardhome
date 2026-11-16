@@ -12,9 +12,10 @@ PKG_NAME:=luci-app-adguardhome
 # 否则固件里会静默装成官方插件。
 # 注意：CI 从本行原样 grep 版本值（actions/build-luci-app），必须是静态字面量，
 # 不能用 $(shell date …) 动态生成（会原样进 artifact 名且多次 parse 不一致）。
+# 2026.11.16.3: 手动设置/更新/密码页按钮同样通栏，统一 inline-block 修复
 # 2026.11.16.2: 修 .1 的注释语法导致日志页 500
 # 2026.11.16.1: 日志页布局修复（勾选框错位、按钮通栏、轮询换行粘连）
-PKG_VERSION:=2026.11.16.2
+PKG_VERSION:=2026.11.16.3
 PKG_MAINTAINER:=admin
 
 LUCI_TITLE:=LuCI app for AdGuard Home
